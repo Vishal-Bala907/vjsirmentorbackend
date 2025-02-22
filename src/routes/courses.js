@@ -130,4 +130,16 @@ router.delete("/delete/:courseId", async (req, res) => {
   }
 });
 
+// API Endpoint: Get Newest Three Courses
+router.get("/courses/newest", async (req, res) => {
+  try {
+    // Fetch newest three courses sorted by creation date
+    const newestCourses = await Course.find().sort({ createdAt: -1 }).limit(3);
+    res.status(200).json(newestCourses);
+  } catch (error) {
+    console.error("Error fetching newest courses:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;
